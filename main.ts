@@ -1,5 +1,3 @@
-let LFSR = 0
-let LFSL = 0
 // 90 Degree Turn
 function HardLeft () {
     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 60)
@@ -37,7 +35,7 @@ function ObjectAvoidance () {
     maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CCW, 50)
     basic.pause(200)
     while (maqueen.Ultrasonic(PingUnit.Centimeters) < 10) {
-        Stop()
+        HardRight()
     }
 }
 function Straight () {
@@ -54,12 +52,16 @@ function SoftLeft () {
     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 30)
     maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 60)
 }
+let LFSL = 0
+let LFSR = 0
+basic.showIcon(IconNames.Happy)
 basic.forever(function () {
     if (maqueen.Ultrasonic(PingUnit.Centimeters) < 10) {
         ObjectAvoidance()
         AvoidingObject()
     }
     if ((LFSL || LFSR) == 1) {
+        HardRight()
         LineFollowing()
     }
 })
